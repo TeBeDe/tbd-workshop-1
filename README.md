@@ -18,7 +18,7 @@ to Google Cloud.
 * pre-commit
 * Terraform ( [Requirements](#Requirements) )
 * Python ~>3.8
-* Linux/MacOS
+* Linux/MacOS 
 * [pre-commit-terraform dependencies](https://github.com/antonbabenko/pre-commit-terraform)
 
 ### GCP
