@@ -159,3 +159,4 @@ resource "google_compute_firewall" "allow-all-internal" {
   }
   source_ranges = ["10.0.0.0/8"]
 }
+
