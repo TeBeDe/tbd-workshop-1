@@ -116,9 +116,29 @@ the running instance of your Vertex AI Workbench
         Layer demo_gold has 12 tables.
     ```
 
-10. Add some 3 more [dbt tests](https://docs.getdbt.com/docs/build/tests) and explain what you are testing. ***Add new tests to your repository.***
+10. Add some 3 more [dbt tests](https://docs.getdbt.com/docs/build/tests) and explain what you are testing.
 
-   ***Code and description of your tests***
+    Test, czy kolumna *day_of_week_desc* zawiera jakies niepoprawne dane:
+
+    ```sql
+        select * from {{ ref('dim_date') }}
+        where day_of_week_desc not in ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+    ```
+
+    Test, czy nie ma rekordow z blednymi datami (zamowienie zlozone pozniej, niz usuniete):
+
+    ```sql
+        select * from {{ ref('fact_watches') }}
+        where sk_date_placed > sk_date_removed
+    ```
+
+    Test, czy kolumna *sk_account_id* z tabeli *dim_account* nie zawiera powtorzen:
+
+    ```sql
+        select sk_account_id
+        from {{ ref('dim_account') }}
+        where sk_account_id is null
+    ```
 
 11. In main.tf update
    ```
