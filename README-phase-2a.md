@@ -81,15 +81,40 @@ the running instance of your Vertex AI Workbench
 
 7. Explore files created by generator and describe them, including format, content, total size.
 
-   ***Files desccription***
+    Wszystkie wygenerowane pliki zostaly zapisane w glownym folderze zeszytu obok 3 folderow: *Batch1*, *Batch2* oraz *Batch3*. Sumarycznie mamy wiec:
+        - pliki *Batch1_audit.csv*, *Batch2_audit.csv* i *Batch3_audit.csv*; zawieraja one poczatek oraz koniec dat wewnatrz ww. folderow
+        - plik *digen_report.txt*, podsumowuje on podstawowe dane nt. generacji m. in. czas trwania, liczbe rekordow etc.
+        - plik *Generator_audit.csv*, zawierajacy dane dot. przebiegu calej generacji od poczatku do konca
+        - folder *Batch1*, w ktorym znajduja sie pliki tekstowe z rozszerzeniem *txt* oraz bez rozszerzen, wszystkie zawieraja statystyki dot. liczby przeprowadzonych operacji tworzenia, usuwania itp.
+        - foldery *Batch2* i *Batch3* o podobnej zawartosci, co *Batch1*, ale schowane w nich pliki sa krotsze
+
 
 8. Analyze tpcdi.py. What happened in the loading stage?
 
-   ***Your answer***
+   1. Wpierw zostaje wywolana nowa sesja Spark.
+   2. Nastepnie powstaje baza danych o nazwie *Hive* z 4 warstwami: *digen*, *bronze*, *silver* i *gold*.
+   3. Do kazdego przetwarzanego pliku tworzony jest odpowiadajacy mu schemat tabeli.
+   4. Nastepuje wczytanie wlasciwych danych do tabel
+   5. Na tabelach wykonywane sa przerozne operacje za pomoca SQL.
+   6. Uzyskane dane, widoki itp. sa zapisywane do nowych plikow
 
 9. Using SparkSQL answer: how many table were created in each layer?
 
-   ***SparkSQL command and output***
+   ```
+        data=spark.sql(“show databases”).collect()
+        layers=[a.namespace for a in data]
+        for l in layers:
+            spark.sql(f"use {l}")
+            print(f"{l}\t{spark.sql('show tables').count()}")
+   ```
+
+   Output:
+
+    ```
+        Layer demo_bronze has 17 tables.
+        Layer demo_silver has 14 tables.
+        Layer demo_gold has 12 tables.
+    ```
 
 10. Add some 3 more [dbt tests](https://docs.getdbt.com/docs/build/tests) and explain what you are testing. ***Add new tests to your repository.***
 
