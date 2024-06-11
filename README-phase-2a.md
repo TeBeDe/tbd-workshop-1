@@ -18,9 +18,13 @@ Worth to read:
 
 2. Authors:
 
-   ***Enter your group nr***
+    Grupa nr 2 w skladzie:
+        - Konrad Dumin
+        - Jakub Kiernozek
 
-   ***Link to forked repo***
+    Link do repozytorium: https://github.com/TeBeDe/tbd-workshop-1
+
+    (link do repozytorium z notebook'iem: https://github.com/TeBeDe/tbd-tpc-di)
 
 3. Sync your repo with https://github.com/bdg-tbd/tbd-workshop-1.
 
